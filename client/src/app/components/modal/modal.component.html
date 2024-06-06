@@ -1,0 +1,106 @@
+<div
+  class="relative z-10"
+  aria-labelledby="modal-title"
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div
+      class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+    >
+      <div
+        class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+      >
+        <ng-container *ngIf="!namingMode; else namingRef">
+          <div
+            class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100"
+          >
+            <svg
+              class="h-6 w-6 text-green-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4.5 12.75l6 6 9-13.5"
+              />
+            </svg>
+          </div>
+          <div class="mt-3 text-center sm:mt-5">
+            <h3
+              class="text-base font-semibold leading-6 text-gray-900"
+              id="modal-title"
+            >
+              {{ !saveMode ? "Deployment successful!" : "Saved successfully!" }}
+            </h3>
+            <div class="mt-2" *ngIf="!saveMode">
+              <p class="text-sm text-gray-500 mb-4">
+                Your landingpage has been deployed successfully. You can now
+                access it via the following link:
+              </p>
+              <a
+                href="{{ url }}"
+                target="_blank"
+                class="text-sm text-blue-500 font-bold underline"
+                >{{ url }}</a
+              >
+            </div>
+            <div class="mt-2" *ngIf="saveMode">
+              <p class="text-sm text-gray-500">
+                This version has been saved successfully.
+              </p>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #namingRef>
+          <div class="mt-3 text-center sm:mt-5">
+            <h3
+              class="text-base font-semibold leading-6 text-gray-900"
+              id="modal-title"
+            >
+              Name your landing page
+            </h3>
+            <p class="text-gray-500 text-sm mb-5 sm:mb-6">
+              Will be used as file name and url name
+            </p>
+            <div class="mt-2">
+              <input
+                type="text"
+                class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+                [(ngModel)]="versionName"
+                (keyup.enter)="saveVersion()"
+                [placeholder]="
+                  storageService.currentFile$.getValue().split('.')[0]
+                "
+              />
+            </div>
+            <div class="mt-5 sm:mt-6 flex">
+              <button
+                (click)="saveVersion()"
+                type="button"
+                class="inline-flex w-full justify-center rounded-md bg-gray-900 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 sm:col-start-2"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <div class="mt-5 sm:mt-6 flex" [ngClass]="{ '!mt-2': namingMode }">
+          <button
+            (click)="clickCloseModal()"
+            type="button"
+            class="inline-flex w-full justify-center rounded-md bg-gray-900 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 sm:col-start-2"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

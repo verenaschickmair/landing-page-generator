@@ -1,0 +1,168 @@
+<div class="flex bg-gray-900" *ngIf="!loadingSpinner">
+  <div class="p-4 flex-col justify-between items-end w-full h-screen">
+    <div class="w-full h-[90%]">
+      <div class="sm:hidden space-y-2 mb-7 mt-2">
+        <select
+          id="tabs"
+          class="bg-gray-900 border border-gray-400 text-gray-200 hover:bg-gray-700 rounded-lg block w-full p-2.5"
+        >
+          <option>Canvas</option>
+          <option>Code</option>
+        </select>
+      </div>
+      <ul class="hidden font-medium text-center rounded-lg mb-4 sm:flex">
+        <li class="w-full">
+          <button
+            (click)="editMode = false"
+            [ngClass]="{
+              '  text-gray-900 bg-gray-200 hover:!bg-gray-300': !editMode
+            }"
+            class="flex rounded-lg justify-center items-center gap-2 rounded-e-none w-full p-4 border border-gray-400 border-r-0 hover:bg-gray-800 text-gray-200"
+          >
+            Canvas
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 8.25V18a2.25 2.25 0 0 0 2.25 2.25h13.5A2.25 2.25 0 0 0 21 18V8.25m-18 0V6a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 6v2.25m-18 0h18M5.25 6h.008v.008H5.25V6ZM7.5 6h.008v.008H7.5V6Zm2.25 0h.008v.008H9.75V6Z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li class="w-full">
+          <button
+            (click)="editMode = true"
+            [ngClass]="{
+              '  text-gray-900 bg-gray-200 hover:!bg-gray-300': editMode
+            }"
+            class="flex justify-center gap-2 items-center rounded-lg w-full rounded-s-none p-4 border border-gray-400 border-l-0 hover:bg-gray-700 text-gray-200"
+          >
+            Code
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+      <div class="w-full h-full overflow-scroll">
+        <div [hidden]="!editMode">
+          <app-editor mode="htmlmixed" ngDefaultControl></app-editor>
+        </div>
+
+        <div [hidden]="editMode" class="w-full h-full overflow-scroll">
+          <iframe
+            id="iframe"
+            sandbox="allow-scripts allow-same-origin"
+            class="w-full h-[90%] bg-gray-200 rounded"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="flex w-full mt-2" *ngIf="!editMode">
+      <button
+        [disabled]="loading"
+        [ngClass]="{
+          'bg-gray-900': !enableSelect,
+          'bg-gray-200  text-gray-900 hover:!bg-gray-300 hover:!text-gray-900':
+            enableSelect
+        }"
+        (click)="toggleSelectMode()"
+        class="whitespace-nowrap mr-2 border disabled:cursor-not-allowed disabled:opacity-50 border-gray-400 flex items-center justify-center space-x-3 rounded-md w-48 bg-gray-900 hover:bg-gray-700 hover:text-gray-200 text-gray-200"
+      >
+        {{ enableSelect ? "Disable" : "Enable" }} Select
+      </button>
+      <textarea
+        [disabled]="loading"
+        (keyup.enter)="$event.preventDefault(); sendPrompt()"
+        rows="1"
+        class="w-full overflow-y-scroll disabled:cursor-not-allowed disabled:opacity-50 overflow-x h-fit max-h-96 resize-none left-0 rounded-md bg-transparent rounded-br-none rounded-tr-none border border-gray-400 px-3.5 py-4 text-gray-200 focus-visible:ring-1 focus-visible:ring-inset text-md whitespace-nowrap md:text-lg sm:leading-6 accent-black focus-visible:outline-gray-400"
+        placeholder="{{
+          selectedVersion || enableSelect
+            ? 'Change selected section'
+            : 'Change entire page'
+        }} by entering your changes..."
+        #refinementPrompt
+      ></textarea>
+      <button
+        (click)="sendPrompt()"
+        [disabled]="loading"
+        class="whitespace-nowrap border disabled:cursor-not-allowed disabled:opacity-50 border-gray-400 flex items-center justify-center space-x-2 rounded-md rounded-bl-none rounded-tl-none w-40 bg-gray-900 hover:bg-gray-700 text-gray-200"
+      >
+        <div *ngIf="loading">
+          <svg
+            aria-hidden="true"
+            class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+        </div>
+        <span>Send</span>
+      </button>
+    </div>
+  </div>
+  <div class="w-fit max-w-2xl">
+    <app-version
+      [code]="code"
+      [currentVersion]="currentVersion"
+      (showModal)="showModal($event)"
+    ></app-version>
+  </div>
+  <app-modal
+    *ngIf="shouldShowModal"
+    (closeModal)="showModal(false)"
+  ></app-modal>
+</div>
+
+<div
+  class="flex items-center justify-center h-screen w-full bg-gray-900 transition-opacity duration-1000"
+  *ngIf="loadingSpinner"
+  [ngClass]="{ 'opacity-100': loadingSpinner, 'opacity-0': !loadingSpinner }"
+>
+  <div class="flex justify-center items-center space-x-1 text-xl text-gray-200">
+    <svg
+      fill="none"
+      class="w-12 h-12 animate-spin"
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        clip-rule="evenodd"
+        d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
+        fill="currentColor"
+        fill-rule="evenodd"
+      />
+    </svg>
+
+    <div>Processing data, please wait...</div>
+  </div>
+</div>

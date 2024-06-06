@@ -1,0 +1,50 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+.CodeMirror {
+  height: auto !important;
+}
+
+.pointer {
+  display: block;
+  position: relative;
+  cursor: pointer;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(116, 116, 116, 0.7);
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: black;
+}
+
+.edit-icon i {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 2rem;
+  color: black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selected {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: relative;
+  display: block;
+}
+
+.selected .edit-icon {
+  color: white;
+}
