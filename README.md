@@ -1,5 +1,5 @@
 # Master Thesis Project
-## Landing Page Generator powered by GPT-3.5 and GPT-4
+# Landing Page Generator powered by GPT-3.5 and GPT-4
 
 ## Client
 
