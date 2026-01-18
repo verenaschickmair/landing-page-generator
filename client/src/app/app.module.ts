@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { AppRoutingModule } from './app-routing.module';
@@ -54,30 +57,28 @@ export const firebaseConfig = {
     FormComponent,
     WarningModalComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     CodemirrorModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     SafePipeModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideDatabase(() =>
       getDatabase(
         getApp(),
-        'https://landingpage-designer-default-rtdb.europe-west1.firebasedatabase.app'
-      )
+        'https://landingpage-designer-default-rtdb.europe-west1.firebasedatabase.app',
+      ),
     ),
     provideStorage(() => getStorage(getApp())),
   ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent],
+  providers: [AuthGuard, provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

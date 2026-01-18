@@ -48,7 +48,7 @@ export class VersionComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private databaseService: DatabaseService,
     private cdRef: ChangeDetectorRef,
-    public router: Router
+    public router: Router,
   ) {}
 
   ngOnInit() {
@@ -68,7 +68,7 @@ export class VersionComponent implements OnInit, OnDestroy {
       this.apiService.loading$.subscribe((loading) => {
         this.loading = loading;
         this.cdRef.detectChanges();
-      })
+      }),
     );
   }
 
@@ -87,7 +87,7 @@ export class VersionComponent implements OnInit, OnDestroy {
         this.user = user;
         this.loadVersions();
         this.cdRef.detectChanges();
-      })
+      }),
     );
   }
 
@@ -96,7 +96,7 @@ export class VersionComponent implements OnInit, OnDestroy {
       this.storageService.files$.subscribe((files) => {
         this.versions = files;
         this.cdRef.detectChanges();
-      })
+      }),
     );
   }
 
@@ -106,7 +106,7 @@ export class VersionComponent implements OnInit, OnDestroy {
         this.currentVersion = file;
         this.listenToPageInfos();
         this.cdRef.detectChanges();
-      })
+      }),
     );
   }
 
@@ -120,12 +120,12 @@ export class VersionComponent implements OnInit, OnDestroy {
       this.databaseService
         .readData(
           'landingpages',
-          this.user.id + '/' + this.currentVersion.split('.')[0]
+          this.user.id + '/' + this.currentVersion.split('.')[0],
         )
         .subscribe((infos) => {
           this.pageInfos = infos;
           this.cdRef.detectChanges();
-        })
+        }),
     );
   }
 
@@ -165,7 +165,7 @@ export class VersionComponent implements OnInit, OnDestroy {
           this.databaseService.updateData(
             'landingpages',
             this.user.id + '/' + fileName,
-            this.pageInfos
+            this.pageInfos,
           );
           await this.loadVersions();
           setTimeout(async () => {
@@ -198,7 +198,7 @@ export class VersionComponent implements OnInit, OnDestroy {
             await this.databaseService.updateData(
               'landingpages',
               this.user.id + '/' + this.currentVersion.split('.')[0],
-              JSON.parse(url)
+              JSON.parse(url),
             );
             this.apiService.loading$.next(false);
             this.showModal.emit(this.currentVersion);
@@ -221,7 +221,7 @@ export class VersionComponent implements OnInit, OnDestroy {
         .then(async () => {
           await this.databaseService.deleteData(
             'landingpages',
-            this.user.id + '/' + this.currentVersion.split('.')[0]
+            this.user.id + '/' + this.currentVersion.split('.')[0],
           );
           setTimeout(async () => {
             this.loadVersions();
@@ -253,14 +253,14 @@ export class VersionComponent implements OnInit, OnDestroy {
           await this.storageService.deleteFile(
             this.user.id,
             this.currentVersion,
-            true
+            true,
           );
           setTimeout(async () => {
             await this.storageService.uploadFile(
               this.user.id,
               this.currentVersion.split('.')[0],
               res.data,
-              true
+              true,
             );
             setTimeout(async () => {
               await this.storageService.downloadFiles(this.user.id);
