@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +33,7 @@ import { WarningModalComponent } from './components/warning-modal/warning-modal.
 import { ReversePipe } from './pipes/reverse.pipe';
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyAnDQuLa2iuh-mO_Ek8LltElhOW9OiGJMQ',
+  apiKey: 'AIzaSyBeMFcRB_L_g9xR5Qt4JrB_eAbJ4OmD5tM',
   authDomain: 'landingpage-designer.firebaseapp.com',
   projectId: 'landingpage-designer',
   storageBucket: 'landingpage-designer.appspot.com',
@@ -42,7 +41,6 @@ export const firebaseConfig = {
   appId: '1:1083076323207:web:4e401325d38376132f9522',
   measurementId: 'G-2R2BTWJVYS',
 };
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +68,10 @@ export const firebaseConfig = {
     SafePipeModule,
     BrowserModule,
     AppRoutingModule,
+  ],
+  providers: [
+    AuthGuard,
+    provideHttpClient(withInterceptorsFromDi()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideDatabase(() =>
       getDatabase(
@@ -79,6 +81,5 @@ export const firebaseConfig = {
     ),
     provideStorage(() => getStorage(getApp())),
   ],
-  providers: [AuthGuard, provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}
