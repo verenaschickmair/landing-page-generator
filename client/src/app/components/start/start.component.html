@@ -1,19 +1,19 @@
-<div
-  class="bg-gray-900 flex justify-center items-center h-screen font-sans"
-  *ngIf="user"
->
-  <div class="mx-auto max-w-5xl space-y-12">
-    <div
-      class="flex gap-4 items-center text-gray-200 justify-start sm:rounded-3xl"
+@if (user) {
+  <div
+    class="bg-gray-900 flex justify-center items-center h-screen font-sans"
     >
-      <h2 class="text-3xl font-bold tracking-tight text-gray-200 sm:text-4xl">
-        Hello {{ user.name }}!
-      </h2>
-      <!--<img
+    <div class="mx-auto max-w-5xl space-y-12">
+      <div
+        class="flex gap-4 items-center text-gray-200 justify-start sm:rounded-3xl"
+        >
+        <h2 class="text-3xl font-bold tracking-tight text-gray-200 sm:text-4xl">
+          Hello {{ user.name }}!
+        </h2>
+        <!--<img
         *ngIf="user.photoSrc"
         class="inline-block h-16 w-16 rounded-full"
         src="{{ user.photoSrc }}"
-      />
+        />
       <svg
         *ngIf="!user.photoSrc"
         xmlns="http://www.w3.org/2000/svg"
@@ -22,12 +22,12 @@
         stroke-width="0.7"
         stroke="currentColor"
         class="w-12 h-12"
-      >
+        >
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
           d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-        />
+          />
       </svg> -->
       <button (click)="logout()">
         <svg
@@ -37,108 +37,110 @@
           stroke-width="1"
           stroke="currentColor"
           class="w-8 h-8"
-        >
+          >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
             d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-          />
+            />
         </svg>
       </button>
     </div>
-
     <button
       (click)="createVersion()"
       type="button"
       class="relative block w-full rounded-lg border-2 border-dashed border-gray-500 p-12 text-center hover:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-    >
+      >
       <svg
         class="mx-auto h-12 w-12 text-gray-400"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
         aria-hidden="true"
-      >
+        >
         <path
           vector-effect="non-scaling-stroke"
           stroke-linecap="round"
           stroke-linejoin="round"
           stroke-width="2"
           d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
-        />
+          />
       </svg>
       <span class="mt-2 block text-sm text-gray-200"
         >Create new landing page</span
-      >
-    </button>
-
-    <div class="mx-auto max-w-lg">
-      <h3 class="font-medium text-gray-200">Your landing pages</h3>
-
-      <div class="mt-2" *ngIf="isLoading">
-        <p class="text-sm text-gray-500">Loading...</p>
-      </div>
-
-      <ul
-        role="list"
-        class="mt-4 divide-y divide-gray-500 overflow-hidden overflow-y-scroll h-80 border-t border-gray-500"
-        *ngIf="!isLoading && versions.length > 0"
-      >
-        <li
-          class="flex items-center justify-between space-x-3 py-4"
-          *ngFor="let version of versions; let i = index"
         >
-          <div class="flex min-w-0 flex-1 items-center space-x-3">
-            <div class="flex-shrink-0">
-              <div
-                class="h-8 w-8 bg-gray-200 flex justify-center items-center rounded-full text-gray-900"
-              >
-                {{ i + 1 }}
-              </div>
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="truncate text-sm text-gray-200">
-                {{ version.name }}
-              </p>
-              <p class="truncate text-xs text-gray-500">
-                {{ version.createdAt | date }}
-              </p>
-            </div>
+      </button>
+      <div class="mx-auto max-w-lg">
+        <h3 class="font-medium text-gray-200">Your landing pages</h3>
+        @if (isLoading) {
+          <div class="mt-2">
+            <p class="text-sm text-gray-500">Loading...</p>
           </div>
-          <div class="flex-shrink-0 space-x-4 pr-4">
-            <a
-              [routerLink]="['/results', version.name]"
-              class="inline-flex items-center gap-x-1.5 text-sm font-semibold leading-6 text-gray-200"
+        }
+        @if (!isLoading && versions.length > 0) {
+          <ul
+            role="list"
+            class="mt-4 divide-y divide-gray-500 overflow-hidden overflow-y-scroll h-80 border-t border-gray-500"
             >
-              View
-            </a>
-            <button
-              type="button"
-              (click)="openWarningModal()"
-              class="inline-flex items-center gap-x-1.5 text-sm font-semibold leading-6 text-gray-200"
-            >
-              Delete
-            </button>
-          </div>
-          <app-warning-modal
-            *ngIf="deleteMode"
+            @for (version of versions; track version; let i = $index) {
+              <li
+                class="flex items-center justify-between space-x-3 py-4"
+                >
+                <div class="flex min-w-0 flex-1 items-center space-x-3">
+                  <div class="flex-shrink-0">
+                    <div
+                      class="h-8 w-8 bg-gray-200 flex justify-center items-center rounded-full text-gray-900"
+                      >
+                      {{ i + 1 }}
+                    </div>
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <p class="truncate text-sm text-gray-200">
+                      {{ version.name }}
+                    </p>
+                    <p class="truncate text-xs text-gray-500">
+                      {{ version.createdAt | date }}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex-shrink-0 space-x-4 pr-4">
+                  <a
+                    [routerLink]="['/results', version.name]"
+                    class="inline-flex items-center gap-x-1.5 text-sm font-semibold leading-6 text-gray-200"
+                    >
+                    View
+                  </a>
+                  <button
+                    type="button"
+                    (click)="openWarningModal()"
+                    class="inline-flex items-center gap-x-1.5 text-sm font-semibold leading-6 text-gray-200"
+                    >
+                    Delete
+                  </button>
+                </div>
+                @if (deleteMode) {
+                  <app-warning-modal
             message="Are you sure you want to delete this version? All of your data
             will be permanently removed from our servers. This action cannot
             be undone."
-            color="red"
-            mode="Delete"
-            (accept)="deleteVersion(version.name)"
-            (closeModal)="deleteMode = false"
-          ></app-warning-modal>
-        </li>
-      </ul>
-
-      <span
-        *ngIf="!versions.length && !isLoading"
-        class="flex items-center justify-between space-x-3 py-4 text-white text-sm w-full mt-4 divide-y divide-gray-500 border-t border-gray-500"
-      >
-        No landing pages created.
-      </span>
+                    color="red"
+                    mode="Delete"
+                    (accept)="deleteVersion(version.name)"
+                    (closeModal)="deleteMode = false"
+                  ></app-warning-modal>
+                }
+              </li>
+            }
+          </ul>
+        }
+        @if (!versions.length && !isLoading) {
+          <span
+            class="flex items-center justify-between space-x-3 py-4 text-white text-sm w-full mt-4 divide-y divide-gray-500 border-t border-gray-500"
+            >
+            No landing pages created.
+          </span>
+        }
+      </div>
     </div>
   </div>
-</div>
+}

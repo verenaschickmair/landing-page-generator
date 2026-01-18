@@ -3,14 +3,14 @@
     <div class="relative isolate overflow-hidden bg-gray-900">
       <h2
         class="mx-auto max-w-3xl text-center font-bold tracking-tight text-white sm:text-3xl"
-      >
+        >
         Generate new landing page
       </h2>
       <form
         class="mx-auto mt-10 flex-col space-y-4 justify-center items-center max-w-4xl"
         [formGroup]="formGroup"
         (ngSubmit)="initGeneration()"
-      >
+        >
         <div>
           <label for="name" class="text-white">Company/Campaign name:</label>
           <span class="text-red-500 text-xl ml-2">*</span>
@@ -19,205 +19,207 @@
             class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
             placeholder="Nike"
             formControlName="name"
-          />
-          <span
-            *ngIf="
-              formGroup.controls.name.errors && formGroup.controls.name.touched
-            "
-            class="text-red-500 text-sm"
-          >
-            Please enter a company/campaign name.</span
-          >
-        </div>
-        <div>
-          <label for="description" class="text-white">Description:</label>
-          <textarea
-            cols="50"
-            rows="2"
-            id="company"
-            class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
-            placeholder="We are a company that sells shoes. Our slogan is: Just do it!. Our designs are minimalistic and modern."
-            formControlName="description"
-          ></textarea>
-        </div>
-        <div>
-          <label for="goals" class="text-white">Goal(s):</label>
-          <textarea
-            cols="50"
-            rows="2"
-            id="goals"
-            class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
-            placeholder="We want to generate leads for our new product."
-            formControlName="goals"
-          ></textarea>
-        </div>
-        <div>
-          <label for="target_group" class="text-white mr-3"
-            >Target group(s):</label
-          >
-          <textarea
-            cols="50"
-            rows="2"
-            id="target_group"
-            class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
-            placeholder="We want to target young people who are interested in fashion."
-            formControlName="target_group"
-          ></textarea>
-        </div>
-
-        <div>
-          <label for="additional-info" class="text-white mr-3"
-            >Additional information:</label
-          >
-          <textarea
-            cols="50"
-            rows="2"
-            id="additional_info"
-            class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
-            placeholder="We want to have a landing page with a contact form and testimonials section."
-            formControlName="additional_info"
-          ></textarea>
-        </div>
-
-        <div class="w-full flex shrink">
-          <div class="w-full">
-            <label for="nativeColor" class="text-white mr-3"
-              >Pick your brand color(s):</label
-            >
-            <div class="flex flex-wrap gap-2" formArrayName="colors">
-              <div
-                *ngFor="
-                  let color of formGroup.controls.colors.controls;
-                  let i = index
-                "
-                class="flex items-center"
-              >
-                <input
-                  id="nativeColor_{{ i }}"
-                  type="color"
-                  value="{{ color.value }}"
-                  formControlName="{{ i }}"
-                  (colorPickerChange)="onChangeColor(i, $event)"
-                />
-              </div>
-              <div class="flex gap-1 ml-1 text-gray-400">
-                <button
-                  type="button"
-                  (click)="removeColorControl()"
-                  *ngIf="formGroup.controls.colors.controls.length > 0"
-                  class="hover:text-gray-200"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-10 h-10"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  (click)="addColorControl()"
-                  class="-ml-2 hover:text-gray-200"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-10 h-10"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="w-full items-center">
-            <label for="creativity" class="text-white mr-3">
-              Choose AI model:</label
-            >
+            />
+          @if (
+            formGroup.controls.name.errors && formGroup.controls.name.touched
+            ) {
             <span
-              class="isolate inline-flex rounded-md shadow-sm w-full mt-1 text-center"
-            >
-              <button
+              class="text-red-500 text-sm"
+              >
+              Please enter a company/campaign name.</span
+              >
+            }
+          </div>
+          <div>
+            <label for="description" class="text-white">Description:</label>
+            <textarea
+              cols="50"
+              rows="2"
+              id="company"
+              class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
+              placeholder="We are a company that sells shoes. Our slogan is: Just do it!. Our designs are minimalistic and modern."
+              formControlName="description"
+            ></textarea>
+          </div>
+          <div>
+            <label for="goals" class="text-white">Goal(s):</label>
+            <textarea
+              cols="50"
+              rows="2"
+              id="goals"
+              class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
+              placeholder="We want to generate leads for our new product."
+              formControlName="goals"
+            ></textarea>
+          </div>
+          <div>
+            <label for="target_group" class="text-white mr-3"
+              >Target group(s):</label
+              >
+              <textarea
+                cols="50"
+                rows="2"
+                id="target_group"
+                class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
+                placeholder="We want to target young people who are interested in fashion."
+                formControlName="target_group"
+              ></textarea>
+            </div>
+
+            <div>
+              <label for="additional-info" class="text-white mr-3"
+                >Additional information:</label
+                >
+                <textarea
+                  cols="50"
+                  rows="2"
+                  id="additional_info"
+                  class="min-w-0 w-full flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white sm:leading-6"
+                  placeholder="We want to have a landing page with a contact form and testimonials section."
+                  formControlName="additional_info"
+                ></textarea>
+              </div>
+
+              <div class="w-full flex shrink">
+                <div class="w-full">
+                  <label for="nativeColor" class="text-white mr-3"
+                    >Pick your brand color(s):</label
+                    >
+                    <div class="flex flex-wrap gap-2" formArrayName="colors">
+                      @for (
+                        color of formGroup.controls.colors.controls; track
+                        color; let i = $index) {
+                        <div
+                          class="flex items-center"
+                          >
+                          <input
+                            id="nativeColor_{{ i }}"
+                            type="color"
+                            value="{{ color.value }}"
+                            formControlName="{{ i }}"
+                            (colorPickerChange)="onChangeColor(i, $event)"
+                            />
+                        </div>
+                      }
+                      <div class="flex gap-1 ml-1 text-gray-400">
+                        @if (formGroup.controls.colors.controls.length > 0) {
+                          <button
+                            type="button"
+                            (click)="removeColorControl()"
+                            class="hover:text-gray-200"
+                            >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-10 h-10"
+                              >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                          </button>
+                        }
+                        <button
+                          type="button"
+                          (click)="addColorControl()"
+                          class="-ml-2 hover:text-gray-200"
+                          >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-10 h-10"
+                            >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full items-center">
+                    <label for="creativity" class="text-white mr-3">
+                      Choose AI model:</label
+                      >
+                      <span
+                        class="isolate inline-flex rounded-md shadow-sm w-full mt-1 text-center"
+                        >
+                        <button
                 [ngClass]="{
                   'text-white bg-gray-700 hover:bg-gray-500': useGPT4,
                   'bg-gray-200  text-gray-900 hover:!bg-gray-300 hover:!text-gray-900':
                     !useGPT4
                 }"
-                type="button"
-                (click)="useGPT4 = false"
-                class="relative text-center items-center rounded-l-md w-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-600 hover:bg-gray-50 focus:z-10"
-              >
-                GPT-3.5
-              </button>
-              <button
+                          type="button"
+                          (click)="useGPT4 = false"
+                          class="relative text-center items-center rounded-l-md w-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-600 hover:bg-gray-50 focus:z-10"
+                          >
+                          GPT-3.5
+                        </button>
+                        <button
                 [ngClass]="{
                   'text-white bg-gray-700 hover:bg-gray-500': !useGPT4,
                   'bg-gray-200  text-gray-900 hover:!bg-gray-300 hover:!text-gray-900':
                     useGPT4
                 }"
-                (click)="useGPT4 = true"
-                type="button"
-                class="relative -ml-px text-center items-center rounded-r-md w-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-600 hover:bg-gray-50 focus:z-10"
-              >
-                GPT-4
-              </button>
-            </span>
-          </div>
-        </div>
-        <div class="w-full">
-          <label for="creativity" class="text-white mr-3">
-            AI Creativity:</label
-          >
-          <div class="relative flex items-center w-full mt-2">
-            <input
-              name="creativity"
-              id="creativity"
-              type="range"
-              min="0"
-              max="100"
-              value="50"
-              class="w-full accent-green-600 cursor-pointer"
-              formControlName="creativity"
-            />
-          </div>
-          <div class="flex justify-between text-xs mt-1 text-gray-400">
-            <span>Low (strictly follow instructions)</span>
-            <span>High (creative freedom)</span>
-          </div>
-        </div>
+                          (click)="useGPT4 = true"
+                          type="button"
+                          class="relative -ml-px text-center items-center rounded-r-md w-full bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-600 hover:bg-gray-50 focus:z-10"
+                          >
+                          GPT-4
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="w-full">
+                    <label for="creativity" class="text-white mr-3">
+                      AI Creativity:</label
+                      >
+                      <div class="relative flex items-center w-full mt-2">
+                        <input
+                          name="creativity"
+                          id="creativity"
+                          type="range"
+                          min="0"
+                          max="100"
+                          value="50"
+                          class="w-full accent-green-600 cursor-pointer"
+                          formControlName="creativity"
+                          />
+                      </div>
+                      <div class="flex justify-between text-xs mt-1 text-gray-400">
+                        <span>Low (strictly follow instructions)</span>
+                        <span>High (creative freedom)</span>
+                      </div>
+                    </div>
 
-        <div class="flex gap-8 !mt-6">
-          <button
-            type="button"
-            (click)="goBack()"
-            class="w-full rounded-md bg-gray-700 hover:bg-gray-500 active:bg-gray-800 px-3.5 py-3 text-md font-semibold text-gray-200 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            Go back
-          </button>
-          <button
-            type="submit"
-            [disabled]="!formGroup.valid"
-            class="w-full rounded-md bg-green-600 hover:bg-green-800 active:bg-green-800 px-3.5 py-3 text-md font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:bg-gray-400 disabled:text-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            Generate
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+                    <div class="flex gap-8 !mt-6">
+                      <button
+                        type="button"
+                        (click)="goBack()"
+                        class="w-full rounded-md bg-gray-700 hover:bg-gray-500 active:bg-gray-800 px-3.5 py-3 text-md font-semibold text-gray-200 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                        >
+                        Go back
+                      </button>
+                      <button
+                        type="submit"
+                        [disabled]="!formGroup.valid"
+                        class="w-full rounded-md bg-green-600 hover:bg-green-800 active:bg-green-800 px-3.5 py-3 text-md font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:bg-gray-400 disabled:text-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                        Generate
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>

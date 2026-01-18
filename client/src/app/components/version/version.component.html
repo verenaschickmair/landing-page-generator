@@ -1,12 +1,12 @@
 <div
   class="border-l w-full border-gray-400 h-screen flex-col items-stretch justify-between px-4"
   [ngClass]="{ '!w-96': showSidebar }"
->
+  >
   <div class="h-[96%] relative">
     <div
       class="flex justify-between items-center text-center text-gray-200 py-7"
       [ngClass]="{ flex: showSidebar }"
-    >
+      >
       <button (click)="navigateMode = true">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -15,72 +15,76 @@
           stroke-width="1"
           stroke="currentColor"
           class="w-8 h-8"
-        >
+          >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
             d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-          />
+            />
         </svg>
       </button>
 
       <div
         class="w-full flex flex-col flex-nowrap justify-end gap-3 items-center"
         [ngClass]="{ '!flex-row !flex-wrap': showSidebar }"
-      >
+        >
         <button (click)="toggleSidebar()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1"
-            stroke="currentColor"
-            class="w-8 h-8"
-            *ngIf="showSidebar"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
-            />
-          </svg>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1"
-            stroke="currentColor"
-            class="w-8 h-8"
-            *ngIf="!showSidebar"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-            />
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>
+          @if (showSidebar) {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1"
+              stroke="currentColor"
+              class="w-8 h-8"
+              >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                />
+            </svg>
+          }
+          @if (!showSidebar) {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1"
+              stroke="currentColor"
+              class="w-8 h-8"
+              >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+            </svg>
+          }
         </button>
-        <button (click)="regeneratePage()" *ngIf="!showSidebar">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1"
-            stroke="currentColor"
-            class="w-8 h-8"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-            />
-          </svg>
-        </button>
+        @if (!showSidebar) {
+          <button (click)="regeneratePage()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1"
+              stroke="currentColor"
+              class="w-8 h-8"
+              >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                />
+            </svg>
+          </button>
+        }
         <button (click)="logout()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -90,12 +94,12 @@
             stroke="currentColor"
             class="w-8 h-8"
             [ngClass]="{ 'mt-1': !showSidebar }"
-          >
+            >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
               d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-            />
+              />
           </svg>
         </button>
       </div>
@@ -103,118 +107,131 @@
 
     <div
       class="flex w-full flex-wrap space-y-2 md:space-x-2 md:space-y-0 md:flex-nowrap pb-4"
-    >
-      <button
-        class="w-full whitespace-nowrap border min-w-36 border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
-        (click)="showSavingModal()"
-        [disabled]="loading"
-        *ngIf="showSidebar"
       >
-        Save
-      </button>
-      <button
-        class="w-full whitespace-nowrap border min-w-36 border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
-        (click)="deployVersion()"
-        [disabled]="loading"
-        *ngIf="showSidebar"
-      >
-        Deploy
-      </button>
-      <button
-        class="w-full whitespace-nowrap border min-w-36 border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
-        (click)="deleteVersion()"
-        [disabled]="loading"
-        *ngIf="showSidebar"
-      >
-        Delete
-      </button>
+      @if (showSidebar) {
+        <button
+          class="w-full whitespace-nowrap border min-w-36 border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
+          (click)="showSavingModal()"
+          [disabled]="loading"
+          >
+          Save
+        </button>
+      }
+      @if (showSidebar) {
+        <button
+          class="w-full whitespace-nowrap border min-w-36 border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
+          (click)="deployVersion()"
+          [disabled]="loading"
+          >
+          Deploy
+        </button>
+      }
+      @if (showSidebar) {
+        <button
+          class="w-full whitespace-nowrap border min-w-36 border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
+          (click)="deleteVersion()"
+          [disabled]="loading"
+          >
+          Delete
+        </button>
+      }
     </div>
 
-    <div
-      class="flex flex-col h-3/5 md:h-[73%] overflow-y-auto space-y-2 w-full text-center"
-      *ngIf="showSidebar"
-    >
-      <button
-        class="w-full px-5 py-6 bg-gray-500 text-gray-900 hover:bg-gray-400 rounded-lg disabled:cursor-not-allowed disabled:opacity-50"
-        *ngFor="let version of versions"
-        (click)="loadVersion(version)"
-        [disabled]="loading"
+    @if (showSidebar) {
+      <div
+        class="flex flex-col h-3/5 md:h-[73%] overflow-y-auto space-y-2 w-full text-center"
+        >
+        @for (version of versions; track version) {
+          <button
+            class="w-full px-5 py-6 bg-gray-500 text-gray-900 hover:bg-gray-400 rounded-lg disabled:cursor-not-allowed disabled:opacity-50"
+            (click)="loadVersion(version)"
+            [disabled]="loading"
         [ngClass]="{
           '!bg-gray-200 hover:!bg-gray-200': version.name == currentVersion
         }"
-      >
-        {{ version.name }}
-        <p class="text-xs">created on {{ version.createdAt | date }}</p>
-      </button>
-      <div *ngIf="!versions.length" class="text-gray-200 my-auto">
-        No versions found.
+            >
+            {{ version.name }}
+            <p class="text-xs">created on {{ version.createdAt | date }}</p>
+          </button>
+        }
+        @if (!versions.length) {
+          <div class="text-gray-200 my-auto">
+            No versions found.
+          </div>
+        }
       </div>
-    </div>
-    <button
-      (click)="regenerateMode = true"
-      *ngIf="showSidebar"
-      [disabled]="loading"
-      class="w-full absolute bottom-0 flex justify-center items-center gap-2 border border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1"
-        stroke="currentColor"
-        class="w-8 h-8"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-        />
-      </svg>
-      Regenerate
-    </button>
+    }
+    @if (showSidebar) {
+      <button
+        (click)="regenerateMode = true"
+        [disabled]="loading"
+        class="w-full absolute bottom-0 flex justify-center items-center gap-2 border border-gray-400 hover:bg-gray-700 rounded text-gray-200 active:bg-gray-500 p-4 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200 disabled:bg-gray-50 disabled:text-gray-900 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1"
+          stroke="currentColor"
+          class="w-8 h-8"
+          >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+            />
+        </svg>
+        Regenerate
+      </button>
+    }
   </div>
 
-  <app-modal
-    *ngIf="shouldShowModal"
-    [saveMode]="!namingMode"
-    [namingMode]="namingMode"
-    (closeModal)="showModalVersion(false)"
-    (setVersionName)="saveVersion($event)"
-  ></app-modal>
+  @if (shouldShowModal) {
+    <app-modal
+      [saveMode]="!namingMode"
+      [namingMode]="namingMode"
+      (closeModal)="showModalVersion(false)"
+      (setVersionName)="saveVersion($event)"
+    ></app-modal>
+  }
 
-  <app-warning-modal
-    *ngIf="deployMode"
-    message="Are you sure you want to deploy this version? This will overwrite the current version."
-    mode="Deploy"
-    color="red"
-    (accept)="deployVersion()"
-    (closeModal)="deployMode = false"
-  ></app-warning-modal>
+  @if (deployMode) {
+    <app-warning-modal
+      message="Are you sure you want to deploy this version? This will overwrite the current version."
+      mode="Deploy"
+      color="red"
+      (accept)="deployVersion()"
+      (closeModal)="deployMode = false"
+    ></app-warning-modal>
+  }
 
-  <app-warning-modal
-    *ngIf="deleteMode"
-    message="Are you sure you want to delete this version? All of your data will be permanently removed from our servers. This action cannot be undone."
-    mode="Delete"
-    color="red"
-    (accept)="deleteVersion()"
-    (closeModal)="deleteMode = false"
-  ></app-warning-modal>
+  @if (deleteMode) {
+    <app-warning-modal
+      message="Are you sure you want to delete this version? All of your data will be permanently removed from our servers. This action cannot be undone."
+      mode="Delete"
+      color="red"
+      (accept)="deleteVersion()"
+      (closeModal)="deleteMode = false"
+    ></app-warning-modal>
+  }
 
-  <app-warning-modal
-    *ngIf="navigateMode"
-    message="Remember to save all your changes before leaving this page. OK to leave?"
-    mode="Leave"
-    color="red"
-    (accept)="router.navigate(['/'])"
-    (closeModal)="navigateMode = false"
-  ></app-warning-modal>
+  @if (navigateMode) {
+    <app-warning-modal
+      message="Remember to save all your changes before leaving this page. OK to leave?"
+      mode="Leave"
+      color="red"
+      (accept)="router.navigate(['/'])"
+      (closeModal)="navigateMode = false"
+    ></app-warning-modal>
+  }
 
-  <app-warning-modal
-    *ngIf="regenerateMode"
-    message="Are you sure you want to regenerate this page? All changes of this page will be lost."
-    mode="Regenerate"
-    color="red"
-    (accept)="regeneratePage()"
-    (closeModal)="regenerateMode = false"
-  ></app-warning-modal>
+  @if (regenerateMode) {
+    <app-warning-modal
+      message="Are you sure you want to regenerate this page? All changes of this page will be lost."
+      mode="Regenerate"
+      color="red"
+      (accept)="regeneratePage()"
+      (closeModal)="regenerateMode = false"
+    ></app-warning-modal>
+  }
 </div>
