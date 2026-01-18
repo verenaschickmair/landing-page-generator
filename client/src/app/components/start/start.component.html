@@ -75,10 +75,14 @@
     <div class="mx-auto max-w-lg">
       <h3 class="font-medium text-gray-200">Your landing pages</h3>
 
+      <div class="mt-2" *ngIf="isLoading">
+        <p class="text-sm text-gray-500">Loading...</p>
+      </div>
+
       <ul
         role="list"
         class="mt-4 divide-y divide-gray-500 overflow-hidden overflow-y-scroll h-80 border-t border-gray-500"
-        *ngIf="versions.length > 0"
+        *ngIf="!isLoading && versions.length > 0"
       >
         <li
           class="flex items-center justify-between space-x-3 py-4"
@@ -128,18 +132,13 @@
           ></app-warning-modal>
         </li>
       </ul>
+
       <span
-        *ngIf="!versions.length"
+        *ngIf="!versions.length && !isLoading"
         class="flex items-center justify-between space-x-3 py-4 text-white text-sm w-full mt-4 divide-y divide-gray-500 border-t border-gray-500"
       >
         No landing pages created.
       </span>
-      <div class="text-center" *ngIf="!versions">
-        <h3 class="mt-2 text-sm font-semibold text-gray-900">No projects</h3>
-        <p class="mt-1 text-sm text-gray-500">
-          Get started by creating a new project.
-        </p>
-      </div>
     </div>
   </div>
 </div>
