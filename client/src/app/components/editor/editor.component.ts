@@ -14,8 +14,9 @@ import { ApiService } from 'src/app/services/api.service';
 export type CodeEditorMode = 'javascript' | 'html' | 'htmlmixed';
 
 @Component({
-  selector: 'app-editor',
-  template: `<textarea #editorHolder></textarea>`,
+    selector: 'app-editor',
+    template: `<textarea #editorHolder></textarea>`,
+    standalone: false
 })
 export class EditorComponent implements AfterViewInit, ControlValueAccessor {
   constructor(private apiService: ApiService) {}

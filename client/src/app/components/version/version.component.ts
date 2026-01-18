@@ -16,10 +16,11 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
-  selector: 'app-version',
-  templateUrl: './version.component.html',
-  styleUrls: ['./version.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-version',
+    templateUrl: './version.component.html',
+    styleUrls: ['./version.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class VersionComponent implements OnInit, OnDestroy {
   @Input() code = '';

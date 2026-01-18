@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-warning-modal',
-  templateUrl: './warning-modal.component.html',
-  styleUrls: ['./warning-modal.component.css'],
+    selector: 'app-warning-modal',
+    templateUrl: './warning-modal.component.html',
+    styleUrls: ['./warning-modal.component.css'],
+    standalone: false
 })
 export class WarningModalComponent implements OnInit {
   @Input() message = '';
